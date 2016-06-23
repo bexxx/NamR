@@ -1,12 +1,12 @@
-#
-NamR
+# NamR
 [![Build status](https://ci.appveyor.com/api/projects/status/gpp0yxuh543tawpd?svg=true)](https://ci.appveyor.com/project/bexxx/namr)
-<!-- Update the VS Gallery link after you upload the VSIX--> Download this extension from the [VS Gallery](https://visualstudiogallery.msdn.microsoft.com/[GuidFromGallery])
+Download this extension from the [VS Gallery](https://visualstudiogallery.msdn.microsoft.com/3dfe2dca-9a74-49b5-ac11-fd9b7af57e59)
 or get the [CI build](http://vsixgallery.com/extension/A98A9358-9F24-4407-AAB7-5871243606AA/).
 
 ---------------------------------------
 
-This extension will provide the IntelliSense completion for naming things in C#. That's right, no more typing cancellationToken in a paramter declaration.
+This extension will provide the IntelliSense completion for naming things in C#. That's right, no more typing cancellationToken in e.g. a parameter declaration.
+Next steps are variable declarations and other places as well as quick fix support for already named things.
 
 See the [changelog](CHANGELOG.md) for changes and roadmap.
 
