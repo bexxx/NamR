@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--//***************************************************************************
+//
+//    Copyright (c) Microsoft Corporation. All rights reserved.
+//    This code is licensed under the Visual Studio SDK license terms.
+//    THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
+//    ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY
+//    IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
+//    PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
+//
+//***************************************************************************-->
+<PackageManifest Version="2.0.0" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011">
+  <Metadata>
+    <Identity Id="A98A9358-9F24-4407-AAB7-5871243606AA" Version="1.0" Language="en-US" Publisher="Ralf 'bexxx' Beckers" />
+    <DisplayName>NamR</DisplayName>
+    <Description xml:space="preserve">This extension will provide the IntelliSense completion for naming things in C#. That's right - no more typing cancellationToken in a parameter declaration!</Description>
+    <License>Resources\LICENSE</License>
+    <Icon>Add.16x16.png</Icon>
+    <PreviewImage>MagicWand.175x175.png</PreviewImage>
+    <Tags>IntelliSense, naming, name, c#</Tags>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="14.0" />
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="4.5" />
+  </Dependencies>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
+  </Assets>
+</PackageManifest>

@@ -1,0 +1,17 @@
+﻿<Dictionary>
+      <Words>
+         <Unrecognized>
+         </Unrecognized>
+         <Recognized>
+           <Word>Intelli</Word>
+         </Recognized>
+         <DiscreteExceptions>
+            <Term>IntelliSense</Term>
+         </DiscreteExceptions>
+      </Words>
+      <Acronyms>
+         <CasingExceptions>
+            <Acronym>IntelliSense</Acronym>
+         </CasingExceptions>
+      </Acronyms>
+   </Dictionary>
