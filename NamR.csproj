@@ -108,7 +108,7 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Icons\MagicWand.175x175.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="LICENSE">
@@ -120,7 +120,7 @@
       <Generator>VsixManifestGenerator</Generator>
       <LastGenOutput>source.extension.resx</LastGenOutput>
     </None>
-    <None Include="NamR.ruleset" />    
+    <None Include="NamR.ruleset" />
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
