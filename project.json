@@ -15,6 +15,7 @@
     "Microsoft.VisualStudio.Text.UI": "14.2.25123",
     "Microsoft.VisualStudio.Text.UI.Wpf": "14.2.25123",
     "Microsoft.VSSDK.BuildTools": "14.2.25201",
+    "OpenCover": "4.6.519",
     "StyleCop.Analyzers": "1.0.0"
   },
   "runtimes": {

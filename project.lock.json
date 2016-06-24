@@ -363,6 +363,9 @@
           "Microsoft.Build.Framework.dll"
         ]
       },
+      "OpenCover/4.6.519": {
+        "type": "package"
+      },
       "StyleCop.Analyzers/1.0.0": {
         "type": "package"
       },
@@ -830,6 +833,9 @@
         "frameworkAssemblies": [
           "Microsoft.Build.Framework.dll"
         ]
+      },
+      "OpenCover/4.6.519": {
+        "type": "package"
       },
       "StyleCop.Analyzers/1.0.0": {
         "type": "package"
@@ -1333,6 +1339,56 @@
         "tools/vssdk/schemas/VSIXManifestSchema.xsd"
       ]
     },
+    "OpenCover/4.6.519": {
+      "sha512": "oReudTijK4ghbd1GNTzl7Su2KzOufj2evTS5PTGAGC5ThfrThcInB/t9w2ISkcEacOsgLQTdG+PO0UUUGZ+zTw==",
+      "type": "package",
+      "files": [
+        "License.rtf",
+        "MSBuild/OpenCover.MSBuild.dll",
+        "MSBuild/OpenCover.targets",
+        "OpenCover.4.6.519.nupkg.sha512",
+        "OpenCover.nuspec",
+        "SampleSln/.nuget/packages.config",
+        "SampleSln/Bom/Bom.csproj",
+        "SampleSln/Bom/BomManager.cs",
+        "SampleSln/Bom/Properties/AssemblyInfo.cs",
+        "SampleSln/BomSample.sln",
+        "SampleSln/BomTest/BomManagerTests.cs",
+        "SampleSln/BomTest/BomTest.csproj",
+        "SampleSln/BomTest/Properties/AssemblyInfo.cs",
+        "SampleSln/BomTest/packages.config",
+        "SampleSln/coverage.bat",
+        "SampleSln/packages/repositories.config",
+        "Samples/x64/OpenCover.Simple.Target.exe",
+        "Samples/x64/OpenCover.Simple.Target.pdb",
+        "Samples/x86/OpenCover.Simple.Target.exe",
+        "Samples/x86/OpenCover.Simple.Target.pdb",
+        "docs/ReleaseNotes.txt",
+        "docs/Usage.rtf",
+        "readme.txt",
+        "tools/Autofac.Configuration.dll",
+        "tools/Autofac.dll",
+        "tools/CrashReporter.NET.dll",
+        "tools/Gendarme.Framework.dll",
+        "tools/Gendarme.Rules.Maintainability.dll",
+        "tools/Mono.Cecil.Mdb.dll",
+        "tools/Mono.Cecil.Pdb.dll",
+        "tools/Mono.Cecil.dll",
+        "tools/OpenCover.Console.exe",
+        "tools/OpenCover.Console.exe.config",
+        "tools/OpenCover.Console.pdb",
+        "tools/OpenCover.Extensions.dll",
+        "tools/OpenCover.Extensions.pdb",
+        "tools/OpenCover.Framework.dll",
+        "tools/OpenCover.Framework.pdb",
+        "tools/log4net.config",
+        "tools/log4net.dll",
+        "tools/x64/OpenCover.Profiler.dll",
+        "tools/x86/OpenCover.Profiler.dll",
+        "transform/simple_report.xslt",
+        "transform/transform.ps1"
+      ]
+    },
     "StyleCop.Analyzers/1.0.0": {
       "sha512": "NT0qdVF8gfXn6YcajL/s9orWNbO9NAr9AM8MDHIxXHstMvxi7+viLxAlZIoWRAA25Cs4O91qFcMt06cL/61TjQ==",
       "type": "package",
@@ -1732,6 +1788,7 @@
       "Microsoft.VisualStudio.Shell.Interop >= 7.10.6071",
       "Microsoft.VisualStudio.Text.UI >= 14.2.25123",
       "Microsoft.VisualStudio.Text.UI.Wpf >= 14.2.25123",
+      "OpenCover >= 4.6.519",
       "StyleCop.Analyzers >= 1.0.0"
     ],
     ".NETFramework,Version=v4.6": []

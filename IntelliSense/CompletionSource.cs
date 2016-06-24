@@ -60,14 +60,23 @@ namespace NamR
             }
 
             SnapshotPoint currentPoint = session.TextView.Caret.Position.BufferPosition - 1;
-            var currentToken = this.root.FindToken(currentPoint.Position);
+
+            SyntaxToken currentToken;
+            try
+            {
+                currentToken = this.root.FindToken(currentPoint.Position);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                return;
+            }
 
             List<string> strList = new List<string>();
             if (currentToken.Parent is ParameterSyntax && ((ParameterSyntax)currentToken.Parent).Identifier == currentToken)
             {
                 var typeName = ((IdentifierNameSyntax)((ParameterSyntax)currentToken.Parent).Type).Identifier.ValueText;
-                var proposedName = char.ToLower(typeName[0], CultureInfo.CurrentCulture) + typeName.Substring(1);
-                strList.Add(proposedName);
+                var proposedNames = NamingHelper.CreateNameProposals(typeName);
+                strList.AddRange(proposedNames);
             }
 
             if (strList.Count > 0)
