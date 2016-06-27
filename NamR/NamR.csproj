@@ -98,6 +98,7 @@
     <Compile Include="IntelliSense\CompletionHandlerProvider.cs" />
     <Compile Include="IntelliSense\CompletionSource.cs" />
     <Compile Include="IntelliSense\CompletionSourceProvider.cs" />
+    <Compile Include="QuickFix\RenameParameterRefactoring.cs" />
     <Compile Include="source.extension.cs">
       <DependentUpon>source.extension.vsixmanifest</DependentUpon>
     </Compile>

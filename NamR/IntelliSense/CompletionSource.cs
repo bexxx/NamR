@@ -7,6 +7,7 @@ namespace NamR
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Microsoft.CodeAnalysis.Text;
@@ -80,14 +81,15 @@ namespace NamR
                 currentToken.Parent is VariableDeclaratorSyntax &&
                 ((VariableDeclaratorSyntax)currentToken.Parent).Identifier == currentToken &&
                 currentToken.Parent.Parent is VariableDeclarationSyntax &&
-                !((VariableDeclarationSyntax)currentToken.Parent.Parent).Type.IsVar)
+                !((VariableDeclarationSyntax)currentToken.Parent.Parent).Type.IsVar &&
+                ((VariableDeclarationSyntax)currentToken.Parent.Parent).Type is IdentifierNameSyntax)
             {
                 typeName = ((IdentifierNameSyntax)((VariableDeclarationSyntax)currentToken.Parent.Parent).Type).Identifier.ValueText;
             }
 
             if (typeName != null)
             {
-                var proposedNames = NamingHelper.CreateNameProposals(typeName);
+                var proposedNames = NamingHelper.CreateNameProposals(typeName).Where(n => n != currentToken.ValueText);
                 strList = new List<string>(proposedNames);
 
                 this.compList = new List<Completion>(strList.Count);
