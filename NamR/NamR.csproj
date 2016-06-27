@@ -129,9 +129,9 @@
       <IncludeInVSIX>true</IncludeInVSIX>
       <DependentUpon>source.extension.vsixmanifest</DependentUpon>
     </Content>
-    <None Include="..\LICENSE">
+    <Content Include="..\LICENSE">
       <Link>LICENSE</Link>
-    </None>
+    </Content>
     <None Include="NamR.snk" />
     <None Include="project.json" />
     <None Include="source.extension.vsixmanifest">
