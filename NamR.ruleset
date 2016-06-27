@@ -324,7 +324,7 @@
     <Rule Id="CA900" Action="Error" />
     <Rule Id="CA901" Action="Error" />
     <Rule Id="CA903" Action="Error" />
-    <Rule Id="CA904" Action="Error" />
+    <Rule Id="CA904" Action="None" />
     <Rule Id="CA905" Action="Error" />
     <Rule Id="CA908" Action="Error" />
   </Rules>

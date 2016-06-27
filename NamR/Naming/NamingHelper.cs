@@ -33,7 +33,7 @@ namespace NamR
 
             var results = new List<string>();
 
-            if (char.IsLower(typeName[0]))
+            if (char.IsUpper(typeName[0]))
             {
                 results.Add(char.ToLower(typeName[0], CultureInfo.CurrentCulture) + typeName.Substring(1));
             }

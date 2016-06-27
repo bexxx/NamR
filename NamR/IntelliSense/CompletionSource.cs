@@ -20,7 +20,7 @@ namespace NamR
     {
         private readonly CompletionSourceProvider sourceProvider;
         private readonly ITextBuffer textBuffer;
-        private readonly SyntaxNode root;
+        ////private readonly SyntaxNode root;
         private List<Completion> compList;
         private bool isDisposed;
 
@@ -28,14 +28,6 @@ namespace NamR
         {
             this.sourceProvider = sourceProvider;
             this.textBuffer = textBuffer;
-
-            var workspace = textBuffer.GetWorkspace();
-            var docId = workspace.GetDocumentIdInCurrentContext(textBuffer.AsTextContainer());
-            var doc = workspace.CurrentSolution.GetDocument(docId);
-            if (!doc.TryGetSyntaxRoot(out this.root))
-            {
-                this.root = null;
-            }
         }
 
         public void Dispose()
@@ -64,22 +56,31 @@ namespace NamR
             SyntaxToken currentToken;
             try
             {
-                currentToken = this.root.FindToken(currentPoint.Position);
+                var workspace = session.TextView.TextBuffer.GetWorkspace();
+                var docId = workspace.GetDocumentIdInCurrentContext(session.TextView.TextBuffer.AsTextContainer());
+                var doc = workspace.CurrentSolution.GetDocument(docId);
+                SyntaxNode root;
+                if (!doc.TryGetSyntaxRoot(out root))
+                {
+                    root = null;
+                }
+
+                currentToken = root.FindToken(currentPoint.Position);
             }
             catch (ArgumentOutOfRangeException)
             {
                 return;
             }
 
-            List<string> strList = new List<string>();
+            List<string> strList = null;
             if (currentToken.Parent is ParameterSyntax && ((ParameterSyntax)currentToken.Parent).Identifier == currentToken)
             {
                 var typeName = ((IdentifierNameSyntax)((ParameterSyntax)currentToken.Parent).Type).Identifier.ValueText;
                 var proposedNames = NamingHelper.CreateNameProposals(typeName);
-                strList.AddRange(proposedNames);
+                strList = new List<string>(proposedNames);
             }
 
-            if (strList.Count > 0)
+            if (strList != null && strList.Count > 0)
             {
                 this.compList = new List<Completion>(strList.Count);
                 foreach (string str in strList)
