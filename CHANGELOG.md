@@ -12,6 +12,12 @@ download in the
 These are the changes to each version that has been released
 on the official Visual Studio extension gallery.
 
+## 1.0.12
+
+**2016-06-27**
+
+- [x] Support variable declarations
+
 ## 1.0
 
 **2016-06-22**
