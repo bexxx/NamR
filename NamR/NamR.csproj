@@ -131,6 +131,7 @@
     </Content>
     <Content Include="..\LICENSE">
       <Link>LICENSE</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="NamR.snk" />
     <None Include="project.json" />
