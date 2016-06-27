@@ -7,8 +7,6 @@ namespace NamR
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
-    using System.Windows.Media.Imaging;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Microsoft.CodeAnalysis.Text;
@@ -73,15 +71,25 @@ namespace NamR
             }
 
             List<string> strList = null;
+            string typeName = null;
             if (currentToken.Parent is ParameterSyntax && ((ParameterSyntax)currentToken.Parent).Identifier == currentToken)
             {
-                var typeName = ((IdentifierNameSyntax)((ParameterSyntax)currentToken.Parent).Type).Identifier.ValueText;
-                var proposedNames = NamingHelper.CreateNameProposals(typeName);
-                strList = new List<string>(proposedNames);
+                typeName = ((IdentifierNameSyntax)((ParameterSyntax)currentToken.Parent).Type).Identifier.ValueText;
+            }
+            else if (
+                currentToken.Parent is VariableDeclaratorSyntax &&
+                ((VariableDeclaratorSyntax)currentToken.Parent).Identifier == currentToken &&
+                currentToken.Parent.Parent is VariableDeclarationSyntax &&
+                !((VariableDeclarationSyntax)currentToken.Parent.Parent).Type.IsVar)
+            {
+                typeName = ((IdentifierNameSyntax)((VariableDeclarationSyntax)currentToken.Parent.Parent).Type).Identifier.ValueText;
             }
 
-            if (strList != null && strList.Count > 0)
+            if (typeName != null)
             {
+                var proposedNames = NamingHelper.CreateNameProposals(typeName);
+                strList = new List<string>(proposedNames);
+
                 this.compList = new List<Completion>(strList.Count);
                 foreach (string str in strList)
                 {
