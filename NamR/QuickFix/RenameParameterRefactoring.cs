@@ -22,6 +22,16 @@ namespace NamR.QuickFix
     [ExportCodeRefactoringProvider(LanguageNames.CSharp, Name = nameof(RenameParameterRefactoring))]
     internal class RenameParameterRefactoring : CodeRefactoringProvider
     {
+        public static async Task<Solution> RenameParameter(Document document, SyntaxToken token, string newName, CancellationToken cancellationToken)
+        {
+            return await Renamer.RenameSymbolAsync(
+                document.Project.Solution,
+                (await document.GetSemanticModelAsync(cancellationToken)).GetDeclaredSymbol(token.Parent),
+                newName,
+                document.Project.Solution.Workspace.Options,
+                cancellationToken);
+        }
+
         public sealed override Task ComputeRefactoringsAsync(CodeRefactoringContext context)
         {
             SyntaxToken currentToken = default(SyntaxToken);
@@ -48,21 +58,11 @@ namespace NamR.QuickFix
                     context.RegisterRefactoring(
                         CodeAction.Create(
                             string.Format(CultureInfo.InvariantCulture, "Rename parameter to {0}", proposedName),
-                            ct => this.RenameParameter(context.Document, currentToken, proposedName, ct)));
+                            ct => RenameParameter(context.Document, currentToken, proposedName, ct)));
                 }
             }
 
             return Task.CompletedTask;
-        }
-
-        public async Task<Solution> RenameParameter(Document document, SyntaxToken token, string newName, CancellationToken cancellationToken)
-        {
-            return await Renamer.RenameSymbolAsync(
-                document.Project.Solution,
-                (await document.GetSemanticModelAsync(cancellationToken)).GetDeclaredSymbol(token.Parent),
-                newName,
-                document.Project.Solution.Workspace.Options,
-                cancellationToken);
         }
     }
 }

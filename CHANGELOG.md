@@ -12,6 +12,9 @@ download in the
 These are the changes to each version that has been released
 on the official Visual Studio extension gallery.
 
+## 1.0.13
+- [ ] First implemention of refactorings to rename parameters. 
+
 ## 1.0.12
 
 **2016-06-27**
