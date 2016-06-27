@@ -14,7 +14,7 @@
     <Identity Id="A98A9358-9F24-4407-AAB7-5871243606AA" Version="1.0" Language="en-US" Publisher="Ralf 'bexxx' Beckers" />
     <DisplayName>NamR</DisplayName>
     <Description xml:space="preserve">This extension will provide the IntelliSense completion for naming things in C#. That's right - no more typing cancellationToken in a parameter declaration!</Description>
-    <License>LICENSE</License>
+    <License>..\LICENSE</License>
     <Icon>Icons\MagicWand.32x32.png</Icon>
     <PreviewImage>Icons\MagicWand.200x200.png</PreviewImage>
     <Tags>IntelliSense, naming, name, c#</Tags>
