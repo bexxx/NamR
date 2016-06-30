@@ -64,6 +64,11 @@ namespace NamR
                     root = null;
                 }
 
+                if (root == null)
+                {
+                    return;
+                }
+
                 currentToken = root.FindToken(currentPoint.Position);
             }
             catch (ArgumentOutOfRangeException)
