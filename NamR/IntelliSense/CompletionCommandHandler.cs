@@ -88,8 +88,6 @@ namespace NamR
                 {
                     // If there is no active session, bring up completion
                     this.TriggerCompletion();
-
-                    this.session?.Filter();
                 }
                 else
                 {

@@ -72,6 +72,7 @@ namespace NamR
             }
 
             List<string> strList = null;
+            bool isUpperCase = false;
             string typeName = null;
             if (currentToken.Parent is ParameterSyntax && ((ParameterSyntax)currentToken.Parent).Identifier == currentToken)
             {
@@ -85,11 +86,15 @@ namespace NamR
                 ((VariableDeclarationSyntax)currentToken.Parent.Parent).Type is IdentifierNameSyntax)
             {
                 typeName = ((IdentifierNameSyntax)((VariableDeclarationSyntax)currentToken.Parent.Parent).Type).Identifier.ValueText;
+
+                isUpperCase = currentToken.Parent.Parent.Parent is PropertyDeclarationSyntax ||
+                    (currentToken.Parent.Parent.Parent is FieldDeclarationSyntax &&
+                    ((FieldDeclarationSyntax)currentToken.Parent.Parent.Parent).Modifiers.Any(t => t.IsKind(Microsoft.CodeAnalysis.CSharp.SyntaxKind.PublicKeyword) || t.IsKind(Microsoft.CodeAnalysis.CSharp.SyntaxKind.ProtectedKeyword) || t.IsKind(Microsoft.CodeAnalysis.CSharp.SyntaxKind.InternalKeyword)));
             }
 
             if (typeName != null)
             {
-                var proposedNames = NamingHelper.CreateNameProposals(typeName).Where(n => n != currentToken.ValueText);
+                var proposedNames = NamingHelper.CreateNameProposals(typeName, isUpperCase).Where(n => n != currentToken.ValueText);
                 strList = new List<string>(proposedNames);
 
                 this.compList = new List<Completion>(strList.Count);

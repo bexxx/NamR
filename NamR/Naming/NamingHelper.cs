@@ -13,7 +13,7 @@ namespace NamR
     [System.Runtime.InteropServices.Guid("3CA5A739-A839-438D-A4DB-F09EE613003E")]
     public static class NamingHelper
     {
-        public static IEnumerable<string> CreateNameProposals(string typeName)
+        public static IEnumerable<string> CreateNameProposals(string typeName, bool isUppercase)
         {
             if (string.IsNullOrWhiteSpace(typeName))
             {
@@ -43,7 +43,14 @@ namespace NamR
                 results.Add(GetAbreviatedName(typeName));
             }
 
-            return results;
+            if (isUppercase)
+            {
+                return results.Select(s => char.ToUpper(s[0], CultureInfo.CurrentCulture) + s.Substring(1));
+            }
+            else
+            {
+                return results;
+            }
         }
 
         internal static string GetAbreviatedName(string typeName)
