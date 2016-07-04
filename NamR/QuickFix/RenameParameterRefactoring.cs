@@ -46,7 +46,7 @@ namespace NamR.QuickFix
             string typeName = null;
             if (currentToken.Parent is ParameterSyntax && ((ParameterSyntax)currentToken.Parent).Identifier == currentToken)
             {
-                typeName = ((IdentifierNameSyntax)((ParameterSyntax)currentToken.Parent).Type).Identifier.ValueText;
+                typeName = SyntaxHelper.GetNameFromTypeSyntax(((ParameterSyntax)currentToken.Parent).Type);
             }
 
             if (typeName != null)
