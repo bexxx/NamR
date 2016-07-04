@@ -9,6 +9,7 @@ namespace NamR
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.CodeAnalysis;
+    using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Microsoft.CodeAnalysis.Text;
     using Microsoft.VisualStudio.Language.Intellisense;
@@ -81,20 +82,19 @@ namespace NamR
             string typeName = null;
             if (currentToken.Parent is ParameterSyntax && ((ParameterSyntax)currentToken.Parent).Identifier == currentToken)
             {
-                typeName = ((IdentifierNameSyntax)((ParameterSyntax)currentToken.Parent).Type).Identifier.ValueText;
+                typeName = SyntaxHelper.GetNameFromTypeSyntax(((ParameterSyntax)currentToken.Parent).Type);
             }
             else if (
                 currentToken.Parent is VariableDeclaratorSyntax &&
                 ((VariableDeclaratorSyntax)currentToken.Parent).Identifier == currentToken &&
                 currentToken.Parent.Parent is VariableDeclarationSyntax &&
-                !((VariableDeclarationSyntax)currentToken.Parent.Parent).Type.IsVar &&
-                ((VariableDeclarationSyntax)currentToken.Parent.Parent).Type is IdentifierNameSyntax)
+                !((VariableDeclarationSyntax)currentToken.Parent.Parent).Type.IsVar)
             {
-                typeName = ((IdentifierNameSyntax)((VariableDeclarationSyntax)currentToken.Parent.Parent).Type).Identifier.ValueText;
+                typeName = SyntaxHelper.GetNameFromTypeSyntax(((VariableDeclarationSyntax)currentToken.Parent.Parent).Type);
 
                 isUpperCase = currentToken.Parent.Parent.Parent is PropertyDeclarationSyntax ||
                     (currentToken.Parent.Parent.Parent is FieldDeclarationSyntax &&
-                    ((FieldDeclarationSyntax)currentToken.Parent.Parent.Parent).Modifiers.Any(t => t.IsKind(Microsoft.CodeAnalysis.CSharp.SyntaxKind.PublicKeyword) || t.IsKind(Microsoft.CodeAnalysis.CSharp.SyntaxKind.ProtectedKeyword) || t.IsKind(Microsoft.CodeAnalysis.CSharp.SyntaxKind.InternalKeyword)));
+                    ((FieldDeclarationSyntax)currentToken.Parent.Parent.Parent).Modifiers.Any(t => t.IsKind(SyntaxKind.PublicKeyword) || t.IsKind(SyntaxKind.ProtectedKeyword) || t.IsKind(SyntaxKind.InternalKeyword)));
             }
 
             if (typeName != null)
