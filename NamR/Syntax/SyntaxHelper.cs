@@ -13,6 +13,11 @@ namespace NamR
     {
         public static string GetNameFromTypeSyntax(TypeSyntax typeSyntax)
         {
+            if (typeSyntax == null)
+            {
+                return null;
+            }
+
             if (typeSyntax.IsKind(SyntaxKind.IdentifierName))
             {
                 return ((IdentifierNameSyntax)typeSyntax).Identifier.ValueText;
