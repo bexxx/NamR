@@ -97,7 +97,7 @@ namespace NamR
                     ((FieldDeclarationSyntax)currentToken.Parent.Parent.Parent).Modifiers.Any(t => t.IsKind(SyntaxKind.PublicKeyword) || t.IsKind(SyntaxKind.ProtectedKeyword) || t.IsKind(SyntaxKind.InternalKeyword)));
             }
 
-            if (typeName != null)
+            if (!string.IsNullOrEmpty(typeName))
             {
                 var proposedNames = NamingHelper.CreateNameProposals(typeName, isUpperCase).Where(n => n != currentToken.ValueText);
                 strList = new List<string>(proposedNames);

@@ -49,7 +49,7 @@ namespace NamR.QuickFix
                 typeName = SyntaxHelper.GetNameFromTypeSyntax(((ParameterSyntax)currentToken.Parent).Type);
             }
 
-            if (typeName != null)
+            if (!string.IsNullOrEmpty(typeName))
             {
                 var proposedNames = NamingHelper.CreateNameProposals(typeName, false).Where(n => n != currentToken.ValueText);
 
