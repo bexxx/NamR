@@ -5,7 +5,6 @@
 
 namespace NamR.QuickFix
 {
-    using System;
     using System.Composition;
     using System.Globalization;
     using System.Linq;
@@ -16,7 +15,6 @@ namespace NamR.QuickFix
     using Microsoft.CodeAnalysis.CodeRefactorings;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Microsoft.CodeAnalysis.Rename;
-    using Microsoft.CodeAnalysis.Text;
 
     [Shared]
     [ExportCodeRefactoringProvider(LanguageNames.CSharp, Name = nameof(RenameParameterRefactoring))]

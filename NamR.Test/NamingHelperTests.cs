@@ -47,5 +47,11 @@
             CollectionAssert.AreEquivalent(new[] { "textView", "tv" }, NamingHelper.CreateNameProposals("ITextView", false).ToList());
             CollectionAssert.AreEquivalent(new[] { "TextView", "Tv" }, NamingHelper.CreateNameProposals("ITextView", true).ToList());
         }
+
+        [TestMethod]
+        public void ProposeCommonNames()
+        {
+            CollectionAssert.AreEquivalent(new[] { "id", "guid" }, NamingHelper.CreateNameProposals("Guid", false).ToList());
+        }
     }
 }

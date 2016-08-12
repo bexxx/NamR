@@ -9,8 +9,9 @@ namespace NamR
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using System.Runtime.InteropServices;
 
-    [System.Runtime.InteropServices.Guid("3CA5A739-A839-438D-A4DB-F09EE613003E")]
+    [Guid("3CA5A739-A839-438D-A4DB-F09EE613003E")]
     public static class NamingHelper
     {
         public static IEnumerable<string> CreateNameProposals(string typeName, bool isUppercase)
@@ -35,6 +36,14 @@ namespace NamR
 
             if (char.IsUpper(typeName[0]))
             {
+                // e.g. Guid -> id
+                // TODO: offer suffixing of Id to the current identifier.
+                var commonName = ProposeCommonNames(typeName);
+                if (!string.IsNullOrEmpty(commonName))
+                {
+                    results.Add(commonName);
+                }
+
                 results.Add(char.ToLower(typeName[0], CultureInfo.CurrentCulture) + typeName.Substring(1));
             }
 
@@ -51,6 +60,17 @@ namespace NamR
             {
                 return results;
             }
+        }
+
+        internal static string ProposeCommonNames(string typeName)
+        {
+            string commonName = null;
+            if (WellKnownNamesForTypes.TypeToNameMapping.TryGetValue(typeName, out commonName))
+            {
+                return commonName;
+            }
+
+            return commonName;
         }
 
         internal static string GetAbreviatedName(string typeName)
