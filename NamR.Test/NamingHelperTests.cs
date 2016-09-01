@@ -51,13 +51,19 @@
         [TestMethod]
         public void ProposeCommonNames()
         {
-            CollectionAssert.AreEquivalent(new[] { "id", "guid" }, NamingHelper.CreateNameProposals("Guid", false).ToList());
+            CollectionAssert.AreEquivalent(new[] { "id" }, NamingHelper.CreateNameProposals("Guid", false).ToList());
         }
 
         [TestMethod]
         public void AppendCommonSuffix()
         {
-            CollectionAssert.AreEquivalent(new[] { "id", "guid", "FooId" }, NamingHelper.CreateNameProposals("Guid", false, "Foo").ToList());
+            CollectionAssert.AreEquivalent(new[] { "id", "FooId" }, NamingHelper.CreateNameProposals("Guid", false, "Foo").ToList());
+        }
+
+        [TestMethod]
+        public void AppendMultipleCommonSuffix()
+        {
+            CollectionAssert.AreEquivalent(new[] { "FooLength", "FooCount" }, NamingHelper.CreateNameProposals("int", false, "Foo").ToList());
         }
     }
 }

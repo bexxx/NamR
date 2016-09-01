@@ -15,10 +15,18 @@ namespace NamR
                 { "Guid", "id" }
             };
 
-        public static Dictionary<string, string> TypeToSuffixMapping { get; } =
-            new Dictionary<string, string>
+        public static Dictionary<string, IEnumerable<string>> TypeToSuffixMapping { get; } =
+            new Dictionary<string, IEnumerable<string>>
             {
-                { "Guid", "Id" }
+                { "Guid", new[] { "Id" } },
+                { "string", new[] { "Name" } },
+                { "int", new[] { "Count", "Length" } }
+            };
+
+        public static HashSet<string> TypesToFilterOut { get; } =
+            new HashSet<string>
+            {
+                { "Guid" }
             };
     }
 }

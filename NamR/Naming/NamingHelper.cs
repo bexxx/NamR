@@ -48,14 +48,14 @@ namespace NamR
                     results.Add(commonName);
                 }
 
-                var withCommonSuffix = AppendCommonSuffix(typeName, beginning);
-                if (!string.IsNullOrEmpty(withCommonSuffix))
+                if (!WellKnownNamesForTypes.TypesToFilterOut.Contains(typeName))
                 {
-                    results.Add(withCommonSuffix);
+                    results.Add(char.ToLower(typeName[0], CultureInfo.CurrentCulture) + typeName.Substring(1));
                 }
-
-                results.Add(char.ToLower(typeName[0], CultureInfo.CurrentCulture) + typeName.Substring(1));
             }
+
+            var withCommonSuffix = AppendCommonSuffix(typeName, beginning);
+            results.AddRange(withCommonSuffix);
 
             if (HasMultipleNameParts(typeName))
             {
@@ -83,20 +83,20 @@ namespace NamR
             return commonName;
         }
 
-        internal static string AppendCommonSuffix(string typeName, string beginning)
+        internal static IEnumerable<string> AppendCommonSuffix(string typeName, string beginning)
         {
-            string commonSuffix = null;
             if (string.IsNullOrEmpty(beginning))
             {
-                return null;
+                return Enumerable.Empty<string>();
             }
 
-            if (WellKnownNamesForTypes.TypeToSuffixMapping.TryGetValue(typeName, out commonSuffix))
+            IEnumerable<string> commonSuffixes = null;
+            if (WellKnownNamesForTypes.TypeToSuffixMapping.TryGetValue(typeName, out commonSuffixes))
             {
-                return beginning + commonSuffix;
+                return commonSuffixes.Select(s => beginning + s);
             }
 
-            return commonSuffix;
+            return Enumerable.Empty<string>();
         }
 
         internal static string GetAbreviatedName(string typeName)
