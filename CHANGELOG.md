@@ -12,6 +12,10 @@ download in the
 These are the changes to each version that has been released
 on the official Visual Studio extension gallery.
 
+## 1.0.24
+- [x] now appending common suffixes (like ...Id for Guid)
+
+
 ## 1.0.13
 - [ ] First implemention of refactorings to rename parameters. 
 
