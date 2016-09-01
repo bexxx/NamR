@@ -57,6 +57,14 @@ namespace NamR
             try
             {
                 var workspace = session.TextView.TextBuffer.GetWorkspace();
+
+                // e.g. in text inputs of VS related to code, but not actually code
+                // there is no workspace (github issue 1: edit breakpoint actions)
+                if (workspace == null)
+                {
+                    return;
+                }
+
                 var docId = workspace.GetDocumentIdInCurrentContext(session.TextView.TextBuffer.AsTextContainer());
                 var doc = workspace.CurrentSolution.GetDocument(docId);
                 SyntaxNode root;
