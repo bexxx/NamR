@@ -16,6 +16,11 @@ namespace NamR
     {
         public static IEnumerable<string> CreateNameProposals(string typeName, bool isUppercase)
         {
+            return CreateNameProposals(typeName, isUppercase, string.Empty);
+        }
+
+        public static IEnumerable<string> CreateNameProposals(string typeName, bool isUppercase, string beginning)
+        {
             if (string.IsNullOrWhiteSpace(typeName))
             {
                 throw new ArgumentException("Argument cannot be null, empty or whitespace.", nameof(typeName));
@@ -37,11 +42,16 @@ namespace NamR
             if (char.IsUpper(typeName[0]))
             {
                 // e.g. Guid -> id
-                // TODO: offer suffixing of Id to the current identifier.
                 var commonName = ProposeCommonNames(typeName);
                 if (!string.IsNullOrEmpty(commonName))
                 {
                     results.Add(commonName);
+                }
+
+                var withCommonSuffix = AppendCommonSuffix(typeName, beginning);
+                if (!string.IsNullOrEmpty(withCommonSuffix))
+                {
+                    results.Add(withCommonSuffix);
                 }
 
                 results.Add(char.ToLower(typeName[0], CultureInfo.CurrentCulture) + typeName.Substring(1));
@@ -71,6 +81,22 @@ namespace NamR
             }
 
             return commonName;
+        }
+
+        internal static string AppendCommonSuffix(string typeName, string beginning)
+        {
+            string commonSuffix = null;
+            if (string.IsNullOrEmpty(beginning))
+            {
+                return null;
+            }
+
+            if (WellKnownNamesForTypes.TypeToSuffixMapping.TryGetValue(typeName, out commonSuffix))
+            {
+                return beginning + commonSuffix;
+            }
+
+            return commonSuffix;
         }
 
         internal static string GetAbreviatedName(string typeName)

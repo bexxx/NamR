@@ -20,7 +20,6 @@ namespace NamR
     {
         private readonly CompletionSourceProvider sourceProvider;
         private readonly ITextBuffer textBuffer;
-        ////private readonly SyntaxNode root;
         private List<Completion> compList;
         private bool isDisposed;
 
@@ -88,6 +87,7 @@ namespace NamR
             List<string> strList = null;
             bool isUpperCase = false;
             string typeName = null;
+
             if (currentToken.Parent is ParameterSyntax && ((ParameterSyntax)currentToken.Parent).Identifier == currentToken)
             {
                 typeName = SyntaxHelper.GetNameFromTypeSyntax(((ParameterSyntax)currentToken.Parent).Type);
@@ -105,9 +105,11 @@ namespace NamR
                     ((FieldDeclarationSyntax)currentToken.Parent.Parent.Parent).Modifiers.Any(t => t.IsKind(SyntaxKind.PublicKeyword) || t.IsKind(SyntaxKind.ProtectedKeyword) || t.IsKind(SyntaxKind.InternalKeyword)));
             }
 
+            var beginning = currentToken.ValueText;
+
             if (!string.IsNullOrEmpty(typeName))
             {
-                var proposedNames = NamingHelper.CreateNameProposals(typeName, isUpperCase).Where(n => n != currentToken.ValueText);
+                var proposedNames = NamingHelper.CreateNameProposals(typeName, isUpperCase, beginning).Where(n => n != currentToken.ValueText);
                 strList = new List<string>(proposedNames);
 
                 this.compList = new List<Completion>(strList.Count);
@@ -131,6 +133,7 @@ namespace NamR
             SnapshotPoint currentPoint = session.TextView.Caret.Position.BufferPosition - 1;
             ITextStructureNavigator navigator = this.sourceProvider.NavigatorService.GetTextStructureNavigator(this.textBuffer);
             TextExtent extent = navigator.GetExtentOfWord(currentPoint);
+
             return currentPoint.Snapshot.CreateTrackingSpan(extent.Span, SpanTrackingMode.EdgeInclusive);
         }
     }

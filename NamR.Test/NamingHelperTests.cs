@@ -53,5 +53,11 @@
         {
             CollectionAssert.AreEquivalent(new[] { "id", "guid" }, NamingHelper.CreateNameProposals("Guid", false).ToList());
         }
+
+        [TestMethod]
+        public void AppendCommonSuffix()
+        {
+            CollectionAssert.AreEquivalent(new[] { "id", "guid", "FooId" }, NamingHelper.CreateNameProposals("Guid", false, "Foo").ToList());
+        }
     }
 }

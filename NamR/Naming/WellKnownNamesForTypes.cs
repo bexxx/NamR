@@ -14,5 +14,11 @@ namespace NamR
             {
                 { "Guid", "id" }
             };
+
+        public static Dictionary<string, string> TypeToSuffixMapping { get; } =
+            new Dictionary<string, string>
+            {
+                { "Guid", "Id" }
+            };
     }
 }

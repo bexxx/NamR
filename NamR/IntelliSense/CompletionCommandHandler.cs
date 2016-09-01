@@ -92,6 +92,7 @@ namespace NamR
                 else
                 {
                     // the completion session is already active, so just filter
+                    this.session.Recalculate();
                     this.session.Filter();
                 }
 
@@ -103,6 +104,7 @@ namespace NamR
                 // redo the filter if there is a deletion
                 if (this.session != null && !this.session.IsDismissed)
                 {
+                    this.session.Recalculate();
                     this.session.Filter();
                 }
 
