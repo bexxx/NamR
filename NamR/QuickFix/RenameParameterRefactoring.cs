@@ -49,7 +49,7 @@ namespace NamR.QuickFix
 
             if (!string.IsNullOrEmpty(typeName))
             {
-                var proposedNames = NamingHelper.CreateNameProposals(typeName, false).Where(n => n != currentToken.ValueText);
+                var proposedNames = NamingHelper.CreateNameProposals(typeName, false, false).Where(n => n != currentToken.ValueText);
 
                 foreach (var proposedName in proposedNames)
                 {

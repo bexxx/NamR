@@ -10,16 +10,19 @@ namespace NamR
     using System.Globalization;
     using System.Linq;
     using System.Runtime.InteropServices;
+    using Microsoft.CodeAnalysis;
+    using Microsoft.CodeAnalysis.CSharp;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     [Guid("3CA5A739-A839-438D-A4DB-F09EE613003E")]
     public static class NamingHelper
     {
-        public static IEnumerable<string> CreateNameProposals(string typeName, bool isUppercase)
+        public static IEnumerable<string> CreateNameProposals(string typeName, bool isUppercase, bool isMultiple)
         {
-            return CreateNameProposals(typeName, isUppercase, string.Empty);
+            return CreateNameProposals(typeName, isUppercase, isMultiple, string.Empty);
         }
 
-        public static IEnumerable<string> CreateNameProposals(string typeName, bool isUppercase, string beginning)
+        public static IEnumerable<string> CreateNameProposals(string typeName, bool isUppercase, bool isMultiple, string beginning)
         {
             if (string.IsNullOrWhiteSpace(typeName))
             {
@@ -62,14 +65,19 @@ namespace NamR
                 results.Add(GetAbreviatedName(typeName));
             }
 
+            IEnumerable<string> typedResults = results;
+
             if (isUppercase)
             {
-                return results.Select(s => char.ToUpper(s[0], CultureInfo.CurrentCulture) + s.Substring(1));
+                typedResults = results.Select(s => char.ToUpper(s[0], CultureInfo.CurrentCulture) + s.Substring(1));
             }
-            else
+
+            if (isMultiple)
             {
-                return results;
+                typedResults = typedResults.Select(s => s + "s");
             }
+
+            return typedResults;
         }
 
         internal static string ProposeCommonNames(string typeName)
@@ -136,6 +144,49 @@ namespace NamR
             }
 
             return false;
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "bdkjfdsf dskjfds jds")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "blablabla")]
+        internal static IEnumerable<string> CreateNameProposalsForCtorParams(Document document, SyntaxToken currentToken)
+        {
+            if (currentToken.Parent.IsKind(SyntaxKind.Parameter) &&
+                currentToken.Parent.Parent.IsKind(SyntaxKind.ParameterList) &&
+                currentToken.Parent.Parent.Parent.IsKind(SyntaxKind.ConstructorDeclaration))
+            {
+                var ctorDeclaration = currentToken.Parent.Parent.Parent as ConstructorDeclarationSyntax;
+                var typeDeclaration = ctorDeclaration.FirstAncestorOrSelf<TypeDeclarationSyntax>();
+
+                var properties = typeDeclaration.Members.Where(m => m.IsKind(SyntaxKind.PropertyDeclaration)).Cast<PropertyDeclarationSyntax>();
+
+                SemanticModel semanticModel = null;
+                if (document.SupportsSemanticModel)
+                {
+                    document.TryGetSemanticModel(out semanticModel);
+                }
+
+                // this needs a good fix. The semantic model is rarely available here.
+                // there's a lot of code in roslyn to handle the icompletionsource interface async,
+                // this is a good reference to start. For new we should more results that the user
+                // has to filter by typing some more characters. At the end this still saves time.
+                if (semanticModel != null)
+                {
+                    var parameterType = semanticModel.GetTypeInfo(((ParameterSyntax)currentToken.Parent).Type).Type;
+
+                    return properties
+                        .Where(p => semanticModel.GetTypeInfo(p.Type).Type.Equals(parameterType))
+                        .Select(p =>
+                        char.ToLower(p.Identifier.ValueText[0], CultureInfo.CurrentCulture) + p.Identifier.ValueText.Substring(1));
+                }
+                else
+                {
+                    return properties
+                        .Select(p =>
+                            char.ToLower(p.Identifier.ValueText[0], CultureInfo.CurrentCulture) + p.Identifier.ValueText.Substring(1));
+                }
+            }
+
+            return Enumerable.Empty<string>();
         }
     }
 }

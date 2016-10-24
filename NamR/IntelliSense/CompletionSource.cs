@@ -9,8 +9,6 @@ namespace NamR
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CSharp;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Microsoft.CodeAnalysis.Text;
     using Microsoft.VisualStudio.Language.Intellisense;
     using Microsoft.VisualStudio.Text;
@@ -53,6 +51,7 @@ namespace NamR
             SnapshotPoint currentPoint = session.TextView.Caret.Position.BufferPosition - 1;
 
             SyntaxToken currentToken;
+            Document document;
             try
             {
                 var workspace = session.TextView.TextBuffer.GetWorkspace();
@@ -65,9 +64,10 @@ namespace NamR
                 }
 
                 var docId = workspace.GetDocumentIdInCurrentContext(session.TextView.TextBuffer.AsTextContainer());
-                var doc = workspace.CurrentSolution.GetDocument(docId);
+                document = workspace.CurrentSolution.GetDocument(docId);
+
                 SyntaxNode root;
-                if (!doc.TryGetSyntaxRoot(out root))
+                if (!document.TryGetSyntaxRoot(out root))
                 {
                     root = null;
                 }
@@ -84,34 +84,26 @@ namespace NamR
                 return;
             }
 
-            List<string> strList = null;
-            bool isUpperCase = false;
-            string typeName = null;
+            List<string> strList = new List<string>();
 
-            if (currentToken.Parent is ParameterSyntax && ((ParameterSyntax)currentToken.Parent).Identifier == currentToken)
-            {
-                typeName = SyntaxHelper.GetNameFromTypeSyntax(((ParameterSyntax)currentToken.Parent).Type);
-            }
-            else if (
-                currentToken.Parent is VariableDeclaratorSyntax &&
-                ((VariableDeclaratorSyntax)currentToken.Parent).Identifier == currentToken &&
-                currentToken.Parent.Parent is VariableDeclarationSyntax &&
-                !((VariableDeclarationSyntax)currentToken.Parent.Parent).Type.IsVar)
-            {
-                typeName = SyntaxHelper.GetNameFromTypeSyntax(((VariableDeclarationSyntax)currentToken.Parent.Parent).Type);
-
-                isUpperCase = currentToken.Parent.Parent.Parent is PropertyDeclarationSyntax ||
-                    (currentToken.Parent.Parent.Parent is FieldDeclarationSyntax &&
-                    ((FieldDeclarationSyntax)currentToken.Parent.Parent.Parent).Modifiers.Any(t => t.IsKind(SyntaxKind.PublicKeyword) || t.IsKind(SyntaxKind.ProtectedKeyword) || t.IsKind(SyntaxKind.InternalKeyword)));
-            }
+            var typeSyntax = SyntaxHelper.GetTypeSyntaxForToken(currentToken);
+            string typeName = SyntaxHelper.GetNameFromTypeSyntax(typeSyntax);
+            bool isUpperCase = SyntaxHelper.IsUppercase(currentToken);
+            bool isMultiple = SyntaxHelper.IsMultiple(typeSyntax);
 
             var beginning = currentToken.ValueText;
 
             if (!string.IsNullOrEmpty(typeName))
             {
-                var proposedNames = NamingHelper.CreateNameProposals(typeName, isUpperCase, beginning).Where(n => n != currentToken.ValueText);
-                strList = new List<string>(proposedNames);
+                var proposedNames = NamingHelper.CreateNameProposals(typeName, isUpperCase, isMultiple, beginning).Where(n => n != currentToken.ValueText);
 
+                strList.AddRange(proposedNames);
+            }
+
+            strList.AddRange(NamingHelper.CreateNameProposalsForCtorParams(document, currentToken));
+
+            if (strList.Any())
+            {
                 this.compList = new List<Completion>(strList.Count);
                 foreach (string str in strList)
                 {

@@ -13,9 +13,16 @@ See the [changelog](CHANGELOG.md) for changes and roadmap.
 ## Features
 
 - IntelliSense for parameter names
-
-### IntelliSense for parameter names
+ 
 ![Param Intellisense](Images/param_intellisense.png)
+
+- IntelliSense name proposals for properties
+
+![Propertyname](Images/propertyname.png)
+
+- IntelliSense parameter name proposals for constructor arguments
+
+![Ctorparams](Images/ctorparams.png)
 
 
 ## Contribute
