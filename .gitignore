@@ -21,3 +21,9 @@ x64/
 *.ncrunchsolution
 *.ncrunchproject
 _NCrunch_WebCompiler
+
+# NuGet Packages
+# NuGet v3's project.json files produces more ignoreable files
+*.nuget.props
+*.nuget.targets
+project.lock.json
