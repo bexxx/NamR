@@ -82,7 +82,7 @@ namespace NamR
                 typedResults = typedResults.Select(s => s + "s");
             }
 
-            return typedResults.Distinct().OrderByDescending(x => x.Length);
+            return typedResults.Distinct();
         }
 
         internal static string ProposeCommonNames(string typeName)
@@ -153,9 +153,9 @@ namespace NamR
         internal static IEnumerable<string> GetCombination(IList<string> list)
         {
             var builder = new StringBuilder();
-            var count = Math.Pow(2, list.Count);
+            var count = (int)Math.Pow(2, list.Count);
 
-            for (int i = 1; i <= count - 1; i++)
+            for (var i = count - 1; i >= 1; i--)
             {
                 builder.Clear();
 
