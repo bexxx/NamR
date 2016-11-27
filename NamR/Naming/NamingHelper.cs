@@ -10,6 +10,7 @@ namespace NamR
     using System.Globalization;
     using System.Linq;
     using System.Runtime.InteropServices;
+    using System.Text;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -63,6 +64,10 @@ namespace NamR
             if (HasMultipleNameParts(typeName))
             {
                 results.Add(GetAbreviatedName(typeName));
+
+                var parts = GetNameParts(typeName).ToList();
+                var names = GetCombination(parts);
+                results.AddRange(names);
             }
 
             IEnumerable<string> typedResults = results;
@@ -77,7 +82,7 @@ namespace NamR
                 typedResults = typedResults.Select(s => s + "s");
             }
 
-            return typedResults;
+            return typedResults.Distinct().OrderByDescending(x => x.Length);
         }
 
         internal static string ProposeCommonNames(string typeName)
@@ -110,6 +115,63 @@ namespace NamR
         internal static string GetAbreviatedName(string typeName)
         {
             return new string(typeName.Where(c => char.IsUpper(c)).ToArray()).ToLower(CultureInfo.CurrentCulture);
+        }
+
+        internal static IEnumerable<string> GetNameParts(string typeName)
+        {
+            if (typeName.Length < 2)
+            {
+                yield break;
+            }
+
+            // Get the indexes of every uppercase character that is followed by a lower case character
+            var indexes = new List<int>();
+
+            for (var i = 0; i < typeName.Length - 1; i++)
+            {
+                var current = typeName[i];
+                var next = typeName[i + 1];
+
+                if (char.IsUpper(current) && char.IsLower(next))
+                {
+                    indexes.Add(i);
+                }
+            }
+
+            indexes.Add(typeName.Length);
+
+            // Split the name into parts
+            for (var i = 0; i < indexes.Count - 1; i++)
+            {
+                var current = indexes[i];
+                var next = indexes[i + 1];
+
+                yield return typeName.Substring(current, next - current);
+            }
+        }
+
+        internal static IEnumerable<string> GetCombination(IList<string> list)
+        {
+            var builder = new StringBuilder();
+            var count = Math.Pow(2, list.Count);
+
+            for (int i = 1; i <= count - 1; i++)
+            {
+                builder.Clear();
+
+                string str = Convert.ToString(i, 2).PadLeft(list.Count, '0');
+                for (int j = 0; j < str.Length; j++)
+                {
+                    if (str[j] == '1')
+                    {
+                        builder.Append(list[j]);
+                    }
+                }
+
+                var value = builder.ToString();
+
+                yield return char.ToLower(value[0]) + value.Substring(1);
+            }
         }
 
         internal static bool IsInterface(string typeName)

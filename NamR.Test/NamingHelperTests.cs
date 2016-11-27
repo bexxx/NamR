@@ -37,17 +37,17 @@
         [TestMethod]
         public void AbbreviateWithUpperCharactersOnly()
         {
-            CollectionAssert.AreEquivalent(new[] { "cancellationToken", "ct" }, NamingHelper.CreateNameProposals("CancellationToken", false, false).ToList());
-            CollectionAssert.AreEquivalent(new[] { "cancellationTokenSource", "cts" }, NamingHelper.CreateNameProposals("CancellationTokenSource", false, false).ToList());
-            CollectionAssert.AreEquivalent(new[] { "CancellationToken", "Ct" }, NamingHelper.CreateNameProposals("CancellationToken", true, false).ToList());
-            CollectionAssert.AreEquivalent(new[] { "CancellationTokenSource", "Cts" }, NamingHelper.CreateNameProposals("CancellationTokenSource", true, false).ToList());
+            CollectionAssert.AreEquivalent(new[] { "cancellationToken", "ct", "cancellation", "token" }, NamingHelper.CreateNameProposals("CancellationToken", false, false).ToList());
+            CollectionAssert.AreEquivalent(new[] { "cancellationTokenSource", "cts", "cancellation", "token", "source", "cancellationToken", "cancellationSource", "tokenSource" }, NamingHelper.CreateNameProposals("CancellationTokenSource", false, false).ToList());
+            CollectionAssert.AreEquivalent(new[] { "CancellationToken", "Ct", "Cancellation", "Token" }, NamingHelper.CreateNameProposals("CancellationToken", true, false).ToList());
+            CollectionAssert.AreEquivalent(new[] { "CancellationTokenSource", "Cts", "Cancellation", "Token", "Source", "CancellationToken", "CancellationSource", "TokenSource" }, NamingHelper.CreateNameProposals("CancellationTokenSource", true, false).ToList());
         }
 
         [TestMethod]
         public void AbbreviateWithUpperCharactersOnlyForInterfaces()
         {
-            CollectionAssert.AreEquivalent(new[] { "textView", "tv" }, NamingHelper.CreateNameProposals("ITextView", false, false).ToList());
-            CollectionAssert.AreEquivalent(new[] { "TextView", "Tv" }, NamingHelper.CreateNameProposals("ITextView", true, false).ToList());
+            CollectionAssert.AreEquivalent(new[] { "textView", "tv", "text", "view" }, NamingHelper.CreateNameProposals("ITextView", false, false).ToList());
+            CollectionAssert.AreEquivalent(new[] { "TextView", "Tv", "Text", "View" }, NamingHelper.CreateNameProposals("ITextView", true, false).ToList());
         }
 
         [TestMethod]
