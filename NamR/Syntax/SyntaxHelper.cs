@@ -5,12 +5,13 @@
 
 namespace NamR
 {
+    using System;
     using System.Linq;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-    public static class SyntaxHelper
+    internal static class SyntaxHelper
     {
         public static TypeSyntax GetTypeSyntaxForToken(SyntaxToken token)
         {
@@ -80,6 +81,16 @@ namespace NamR
             }
 
             return false;
+        }
+
+        public static bool IsSupportedSyntax(SyntaxToken token)
+        {
+            return
+                token.Parent is ParameterSyntax ||
+                token.Parent is VariableDeclaratorSyntax ||
+                (token.Parent?.Parent?.Parent != null &&
+                (token.Parent.Parent.Parent is PropertyDeclarationSyntax ||
+                token.Parent.Parent.Parent is FieldDeclarationSyntax));
         }
 
         public static bool IsUppercase(SyntaxToken syntaxToken)
