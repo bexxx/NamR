@@ -57,7 +57,7 @@ namespace NamR
                 var workspace = session.TextView.TextBuffer.GetWorkspace();
 
                 // e.g. in text inputs of VS related to code, but not actually code
-                // there is no workspace (github issue 1: edit breakpoint actions)
+                // there is no workspace (github issue #1: edit breakpoint actions)
                 if (workspace == null)
                 {
                     return;
@@ -80,6 +80,11 @@ namespace NamR
                 currentToken = root.FindToken(currentPoint.Position);
             }
             catch (ArgumentOutOfRangeException)
+            {
+                return;
+            }
+
+            if (!SyntaxHelper.IsSupportedSyntax(currentToken))
             {
                 return;
             }
