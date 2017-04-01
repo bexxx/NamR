@@ -1,12 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NamR", "NamR\NamR.csproj", "{3DF45DDD-0A6C-4E92-B232-C4FC2350BF9E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A681010B-0BCB-4FCE-8ABD-0D8B5331E94C}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		appveyor.yml = appveyor.yml
 		CHANGELOG.md = CHANGELOG.md
 		CONTRIBUTING.md = CONTRIBUTING.md
@@ -16,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		NamR.ruleset = NamR.ruleset
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NamR", "NamR\NamR.csproj", "{3DF45DDD-0A6C-4E92-B232-C4FC2350BF9E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NamR.Test", "NamR.Test\NamR.Test.csproj", "{2CB834A8-19A6-48EE-9C14-F21E1D4AEEA1}"
 EndProject
