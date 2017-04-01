@@ -14,7 +14,7 @@
     "Microsoft.VisualStudio.Shell.Interop": "7.10.6071",
     "Microsoft.VisualStudio.Text.UI": "14.2.25123",
     "Microsoft.VisualStudio.Text.UI.Wpf": "14.2.25123",
-    "Microsoft.VSSDK.BuildTools": "14.2.25201",
+    "Microsoft.VSSDK.BuildTools": "15.0.26201",
     "OpenCover": "4.6.519",
     "StyleCop.Analyzers": "1.0.0"
   },
