@@ -53,11 +53,17 @@ namespace NamR
             else if (typeSyntax.IsKind(SyntaxKind.GenericName))
             {
                 var genericType = (GenericNameSyntax)typeSyntax;
-                if (genericType.Arity == 1)
+
+                // TODO: later on we want to handle known interfaces, but because we only use
+                // this at the moment in the IsMultiple, just checking for the single known interface is
+                // sufficient (and butt ugly, yeah ...)
+                if (genericType.Identifier.ValueText == "IEnumerable")
                 {
                     return GetNameFromTypeSyntax(
                         genericType.TypeArgumentList.Arguments.FirstOrDefault());
                 }
+
+                return genericType.Identifier.ValueText;
             }
 
             return null;
