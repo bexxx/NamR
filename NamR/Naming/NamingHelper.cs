@@ -250,5 +250,20 @@ namespace NamR
 
             return Enumerable.Empty<string>();
         }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "bdkjfdsf dskjfds jds")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "blablabla")]
+        internal static IEnumerable<string> CreateNameProposalsForNonPublicFields(SyntaxToken currentToken, IEnumerable<string> existingProposals)
+        {
+            if (currentToken.Parent.IsKind(SyntaxKind.VariableDeclarator) &&
+                currentToken.Parent.Parent.IsKind(SyntaxKind.VariableDeclaration) &&
+                currentToken.Parent.Parent.Parent.IsKind(SyntaxKind.FieldDeclaration) &&
+                !((FieldDeclarationSyntax)currentToken.Parent.Parent.Parent).Modifiers.Any(m => m.IsKind(SyntaxKind.PublicKeyword)))
+            {
+                return existingProposals.Select(p => "_" + p);
+            }
+
+            return Enumerable.Empty<string>();
+        }
     }
 }

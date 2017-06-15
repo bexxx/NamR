@@ -107,6 +107,8 @@ namespace NamR
 
             strList.AddRange(NamingHelper.CreateNameProposalsForCtorParams(document, currentToken));
 
+            strList.AddRange(NamingHelper.CreateNameProposalsForNonPublicFields(currentToken, strList.ToList()));
+
             if (strList.Any())
             {
                 this.compList = new List<Completion>(strList.Count);
