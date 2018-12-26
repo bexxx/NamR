@@ -20,7 +20,7 @@ namespace NamR.QuickFix
     [ExportCodeRefactoringProvider(LanguageNames.CSharp, Name = nameof(RenameParameterRefactoring))]
     internal class RenameParameterRefactoring : CodeRefactoringProvider
     {
-        public static async Task<Solution> RenameParameter(Document document, SyntaxToken token, string newName, CancellationToken cancellationToken)
+        public static async Task<Solution> RenameParameterAsync(Document document, SyntaxToken token, string newName, CancellationToken cancellationToken)
         {
             return await Renamer.RenameSymbolAsync(
                 document.Project.Solution,
@@ -56,7 +56,7 @@ namespace NamR.QuickFix
                     context.RegisterRefactoring(
                         CodeAction.Create(
                             string.Format(CultureInfo.InvariantCulture, "Rename parameter to {0}", proposedName),
-                            ct => RenameParameter(context.Document, currentToken, proposedName, ct)));
+                            ct => RenameParameterAsync(context.Document, currentToken, proposedName, ct)));
                 }
             }
 

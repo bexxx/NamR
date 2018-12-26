@@ -10,25 +10,25 @@
 //
 //***************************************************************************-->
 <PackageManifest Version="2.0.0" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011">
-  <Metadata>
-    <Identity Id="A98A9358-9F24-4407-AAB7-5871243606AA" Version="1.0" Language="en-US" Publisher="Ralf 'bexxx' Beckers" />
-    <DisplayName>NamR</DisplayName>
-    <Description xml:space="preserve">This extension will provide the IntelliSense completion for naming things in C#. That's right - no more typing cancellationToken in a parameter declaration!</Description>
-    <License>LICENSE</License>
-    <Icon>Icons\MagicWand.32x32.png</Icon>
-    <PreviewImage>Icons\MagicWand.200x200.png</PreviewImage>
-    <Tags>IntelliSense, naming, name, c#</Tags>
-  </Metadata>
-  <Installation>
-    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[14.0,16.0)" />
-  </Installation>
-  <Dependencies>
-    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="4.5" />
-  </Dependencies>
-  <Assets>
-    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
-  </Assets>
-  <Prerequisites>
-    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,16.0)" DisplayName="Visual Studio core editor" />
-  </Prerequisites>
+    <Metadata>
+        <Identity Id="A98A9358-9F24-4407-AAB7-5871243606AA" Version="1.0" Language="en-US" Publisher="Ralf 'bexxx' Beckers" />
+        <DisplayName>NamR</DisplayName>
+        <Description xml:space="preserve">This extension will provide the IntelliSense completion for naming things in C#. That's right - no more typing cancellationToken in a parameter declaration!</Description>
+        <License>LICENSE</License>
+        <Icon>Icons\MagicWand.32x32.png</Icon>
+        <PreviewImage>Icons\MagicWand.200x200.png</PreviewImage>
+        <Tags>IntelliSense, naming, name, c#</Tags>
+    </Metadata>
+    <Installation>
+        <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[14.0,17.0)" />
+    </Installation>
+    <Dependencies>
+        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="4.5" />
+    </Dependencies>
+    <Assets>
+        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
+    </Assets>
+    <Prerequisites>
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,)" DisplayName="Visual Studio core editor" />
+    </Prerequisites>
 </PackageManifest>
