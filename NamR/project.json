@@ -7,6 +7,7 @@
     "Microsoft.CodeAnalysis.CSharp.Extensions": "1.0.0",
     "Microsoft.CodeAnalysis.EditorFeatures.Text": "1.2.2",
     "Microsoft.VisualStudio.Language.Intellisense": "14.2.25123",
+    "Microsoft.VisualStudio.SDK.Analyzers": "15.8.36",
     "Microsoft.VisualStudio.SDK.EmbedInteropTypes": "14.1.2",
     "Microsoft.VisualStudio.Shell.14.0": "14.2.25123",
     "Microsoft.VisualStudio.Shell.Immutable.10.0": "10.0.30319",
